@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block titulo %} Lista Libros {% endblock %}
+
+{% block contenido %}
+
+<div class="card">
+    <div class="card-header">
+    <a name="" id="" class="btn btn-success" href="{% url 'crear' %}" role="button">Agregar Nuevo Libro</a></div>
+    <div class="card-body">
+        <h4 class="card-title">Listar Libros</h4>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr class="table-primary">
+                        <th scope="col">ID</th>
+                        <th scope="col">Titulo</th>
+                        <th scope="col">Imagen</th>
+                        <th scope="col">Descripcion</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="">
+                        <td scope="row">1</td>
+                        <td>Django con Python</td>
+                        <td>Image 1.jpg</td>
+                        <td>Libros que hablasn sobre el Frame</td>
+                        <td>| Editar | Borrar |</td>
+                    </tr>
+                    <tr class="">
+                        <td scope="row">2</td>
+                        <td>Django con Python</td>
+                        <td>Image 2.jpg</td>
+                        <td>Libros que hablasn sobre el Frame</td>
+                        <td>| Editar | Borrar |</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    <div class="card-footer text-muted">Footer</div>
+</div>
+
+
+
+{% endblock %}
