@@ -6,7 +6,8 @@
 
 <div class="card">
     <div class="card-header">
-    <a name="" id="" class="btn btn-success" href="{% url 'crear' %}" role="button">Agregar Nuevo Libro</a></div>
+        <a name="" id="" class="btn btn-success" href="{% url 'crear' %}" role="button">Agregar Nuevo Libro</a>
+    </div>
     <div class="card-body">
         <h4 class="card-title">Listar Libros</h4>
         <div class="table-responsive">
@@ -21,28 +22,74 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% for libro in libros %}
                     <tr class="">
-                        <td scope="row">1</td>
-                        <td>Django con Python</td>
-                        <td>Image 1.jpg</td>
-                        <td>Libros que hablasn sobre el Frame</td>
-                        <td>| Editar | Borrar |</td>
+                        <td scope="row">{{libro.id}}</td>
+                        <td>{{libro.titulo}}</td>
+                        <td><a href="{{ libro.imagen.url }}">
+                                <img src="{{ libro.imagen.url }}"  class="img-thumbnail" width="80"alt="image desc" /></a>
+
+                        </td>
+                        <td>{{libro.descripcion}}</td>
+                        <td><a name="" id="" class="btn btn-info" href="{% url 'editar' %}" role="button">Editar</a>
+                            <a name="" id="" class="btn btn-danger" href="#" role="button">Borrar</a>
+                        </td>
                     </tr>
-                    <tr class="">
-                        <td scope="row">2</td>
-                        <td>Django con Python</td>
-                        <td>Image 2.jpg</td>
-                        <td>Libros que hablasn sobre el Frame</td>
-                        <td>| Editar | Borrar |</td>
-                    </tr>
+                    {% endfor%}
                 </tbody>
             </table>
         </div>
 
     </div>
-    <div class="card-footer text-muted">Footer</div>
+    
+</div><br>
+        
 </div>
-
-
-
+<br><br>
+{% for libro in libros %}
+<div class="card-deck col-md-4" style="padding: 1%;">
+    <div class="card">
+        <div><a href="{{ libro.imagen.url }}">
+            <img class="card-img-top" src="{{ libro.imagen.url }}" height="400"></a>
+        </div>
+        <div class="card-body"> 
+                <h5 class="card-title">{{libro.titulo}}</h5>
+                <p class="card-text">{{libro.descripcion}}</p>
+        </div>
+        <div class="card-footer">
+                <a name="" id="" class="btn btn-info" href="{% url 'editar' %}" role="button">Editar</a>
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal{{libro.id}}">
+                    Eliminar
+                  </button>
+                  
+                  <!-- Modal de confirmación -->
+                  <div class="modal fade" id="confirmDeleteModal{{ libro.id }}"tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar eliminación</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          ¿Estás seguro de que quieres eliminar este Libro?
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                          <form action="{% url 'eliminar' libro.id %}" method="POST" style="display:inline;">
+                            <!-- Incluir un token CSRF si estás usando Django -->
+                            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                            <!-- Incluir el identificador del registro a eliminar -->
+                            <input type="hidden" name="id" value="ID_DEL_REGISTRO">
+                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+         </div>
+    </div>
+</div>
+{% endfor%}
+<br><br>
 {% endblock %}
+
